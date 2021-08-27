@@ -1,0 +1,12 @@
+{
+  "name": "virus-navi",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "description": "Sample Chrome Extension",
+  "content_scripts": [
+    {
+      "matches": ["https://v-sys.mhlw.go.jp/search/list.html*"],
+      "js": ["jquery-3.6.0.min.js", "content.js"]
+    }
+  ]
+}
