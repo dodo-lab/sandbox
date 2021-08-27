@@ -13,12 +13,28 @@ $(function () {
     }
   });
 
-  $('h2').after(
-    '<button type="button" class="btn btn-danger" id="stopCheckShip"><span>チェック停止</span></button>'
-  );
+  // チェックの停止と開始のボタンを追加
+  $('h2')
+    .after(
+      '<button type="button" class="btn btn-danger" id="stopCheckShip"><span>チェック停止</span></button>'
+    )
+    .after(
+      '<button type="button" class="btn btn-primary" id="startCheckShip" style="display: none;" id="stopCheckShip"><span>チェック開始</span></button>'
+    );
 
+  // チェック停止クリック
   $('#stopCheckShip').click(() => {
     check = false;
+    $('#startCheckShip').show();
+    $('#stopCheckShip').hide();
+  });
+
+  // チェック開始クリック
+  $('#startCheckShip').click(() => {
+    check = false;
+    $('#stopCheckShip').show();
+    $('#startCheckShip').hide();
+    checkShip();
   });
 });
 
@@ -27,6 +43,7 @@ async function checkShip() {
     return;
   }
 
+  // パラメータ
   let data = {
     CargoTypeID: 1,
     OriginCFSLocationName: 'OSAKA, JAPAN',
