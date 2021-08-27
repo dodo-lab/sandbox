@@ -29,7 +29,7 @@ async function checkShip() {
 
   let data = {
     CargoTypeID: 1,
-    OriginCFSLocationName: 'AKITA, JAPAN',
+    OriginCFSLocationName: 'OSAKA, JAPAN',
     FinalDestinationLocationName: 'LOS ANGELES, CA, UNITED STATES',
     DBBookingFlag: false,
   };
