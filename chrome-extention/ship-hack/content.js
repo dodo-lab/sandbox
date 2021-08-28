@@ -22,6 +22,10 @@ $(function () {
       '<button type="button" class="btn btn-primary" id="startCheckShip" style="display: none;" id="stopCheckShip"><span>チェック開始</span></button>'
     );
 
+  // 荷受地と仕向地の初期値設定
+  $('#originCFS').val('OSAKA, JAPAN');
+  $('#finalDestination').val('LOS ANGELES, CA, UNITED STATES');
+
   // チェック停止クリック
   $('#stopCheckShip').click(() => {
     check = false;
@@ -31,7 +35,7 @@ $(function () {
 
   // チェック開始クリック
   $('#startCheckShip').click(() => {
-    check = false;
+    check = true;
     $('#stopCheckShip').show();
     $('#startCheckShip').hide();
     checkShip();
@@ -44,37 +48,42 @@ async function checkShip() {
   }
 
   // パラメータ
-  let data = {
+  let params = {
     CargoTypeID: 1,
-    OriginCFSLocationName: 'OSAKA, JAPAN',
-    FinalDestinationLocationName: 'LOS ANGELES, CA, UNITED STATES',
+    OriginCFSLocationName: $('#originCFS').val(),
+    FinalDestinationLocationName: $('#finalDestination').val(),
     DBBookingFlag: false,
   };
 
-  fetch('https://web.logix.co.jp/api/ScheduleSearch', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.scheduleData) {
-        for (let schedule of data.scheduleData) {
-          if (schedule.BookingButtonTitle === 'ブッキング') {
-            let n = new Notification('セイノーロジックス', {
-              body: 'ブッキング可能',
-            });
+  try {
+    let response = await fetch('https://web.logix.co.jp/api/ScheduleSearch', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(params),
+    });
 
-            setTimeout(n.close.bind(n), 1000 * 10);
-            setTimeout(checkShip, 1000 * 10);
-            return;
-          }
+    let data = await response.json();
+    console.log(data);
+    if (data?.scheduleData) {
+      for (let schedule of data.scheduleData) {
+        if (schedule.BookingButtonTitle === 'ブッキング') {
+          let n = new Notification('ブッキング可能', {
+            body: `荷受地：${params.OriginCFSLocationName}\n仕向地：${params.FinalDestinationLocationName}`,
+          });
+
+          setTimeout(n.close.bind(n), 1000 * 10);
+          setTimeout(checkShip, 1000 * 10);
+          return;
         }
       }
+    }
 
-      setTimeout(checkShip, 1000 * 60);
-    });
+    setTimeout(checkShip, 1000 * 10);
+  } catch (e) {
+    console.error(e);
+    setTimeout(checkShip, 1000 * 60);
+  }
 }
