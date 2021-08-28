@@ -56,6 +56,7 @@ async function checkShip() {
   };
 
   try {
+    // スケジュール検索のリクエスト
     let response = await fetch('https://web.logix.co.jp/api/ScheduleSearch', {
       method: 'POST',
       headers: {
@@ -70,12 +71,19 @@ async function checkShip() {
     if (data?.scheduleData) {
       for (let schedule of data.scheduleData) {
         if (schedule.BookingButtonTitle === 'ブッキング') {
-          let n = new Notification('ブッキング可能', {
-            body: `荷受地：${params.OriginCFSLocationName}\n仕向地：${params.FinalDestinationLocationName}`,
+          // ユーザーへ通知
+          let notification = new Notification('ブッキング可能', {
+            body: [
+              `荷受地：${params.OriginCFSLocationName}`,
+              `仕向地：${params.FinalDestinationLocationName}`,
+            ].join('\n'),
+            requireInteraction: true, // ユーザーが明示的に解除するまで通知を閉じない
           });
 
-          setTimeout(n.close.bind(n), 1000 * 10);
-          setTimeout(checkShip, 1000 * 10);
+          // 通知をクローズしたタイミングでタイマーを発行する
+          notification.onclose = () => {
+            setTimeout(checkShip, 1000 * 10);
+          };
           return;
         }
       }
