@@ -67,25 +67,36 @@ async function checkShip() {
     });
 
     let data = await response.json();
-    console.log(data);
     if (data?.scheduleData) {
+      // 通知のボディ作成
+      let no = 1;
+      let notificationBody = '';
       for (let schedule of data.scheduleData) {
+        // ブッキング可能なスケジュールのみ通知対象
         if (schedule.BookingButtonTitle === 'ブッキング') {
-          // ユーザーへ通知
-          let notification = new Notification('ブッキング可能', {
-            body: [
-              `荷受地：${params.OriginCFSLocationName}`,
-              `仕向地：${params.FinalDestinationLocationName}`,
-            ].join('\n'),
-            requireInteraction: true, // ユーザーが明示的に解除するまで通知を閉じない
-          });
+          notificationBody += [
+            `${no}：${getMonthDayWeek(schedule.CFSCutOffDate)}`,
+            ` - ${schedule.HubCityName} ${getMonthDayWeek(schedule.HubETA)}`,
+            ` - ${getMonthDayWeek(schedule.FinalDestinationETATo)}\n`,
+          ].join();
 
-          // 通知をクローズしたタイミングでタイマーを発行する
-          notification.onclose = () => {
-            setTimeout(checkShip, 1000 * 10);
-          };
-          return;
+          ++no;
         }
+      }
+
+      if (notificationBody) {
+        let title = `ブッキング可能 / ${params.OriginCFSLocationName} → ${params.FinalDestinationLocationName}`;
+        // ユーザーへ通知
+        let notification = new Notification(title, {
+          body: notificationBody,
+          requireInteraction: true, // ユーザーが明示的に解除するまで通知を閉じない
+        });
+
+        // 通知をクローズしたタイミングでタイマーを発行する
+        notification.onclose = () => {
+          setTimeout(checkShip, 1000 * 10);
+        };
+        return;
       }
     }
 
@@ -94,4 +105,11 @@ async function checkShip() {
     console.error(e);
     setTimeout(checkShip, 1000 * 60);
   }
+}
+
+function getMonthDayWeek(targetDate) {
+  const weeks = ['日', '月', '火', '水', '木', '金', '土'];
+
+  let date = new Date(targetDate);
+  return `${date.getMonth() + 1}/${date.getDate()}/(${weeks[date.getDay()]})`;
 }
