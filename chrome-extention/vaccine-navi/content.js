@@ -48,5 +48,6 @@ function editScreen() {
 function createBeforeDate(beforeDay) {
   let date = new Date();
   date.setDate(date.getDate() - beforeDay);
+  date.setHours(0, 0, 0, 0);
   return date;
 }
