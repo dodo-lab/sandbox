@@ -17,10 +17,15 @@ class <%= Name %> {
       },
       // 文字列をキャメルケースに変換する
       camelize: {
-        normal: '<%= h.inflection.camelize("message_property") %>',
-        normal2: '<%= h.inflection.camelize("messageProperty") %>',
-        firstSmall: '<%= h.inflection.camelize("message_property", true) %>'
-      }
+        message_property: '<%= h.inflection.camelize("message_property") %>',
+        messageProperty: '<%= h.inflection.camelize("messageProperty") %>',
+        message_property_firstSmall: '<%= h.inflection.camelize("message_property", true) %>'
+      },
+      // 文字列をアンダースコア形式に変換
+      underscore: {
+        MessageProperties: '<%= h.inflection.underscore("MessageProperties") %>',
+        messageProperties: '<%= h.inflection.underscore("messageProperties") %>',
+      },
     }
   }
 }
