@@ -15,6 +15,12 @@ class <%= Name %> {
         Hats: '<%= h.inflection.singularize("Hats") %>',
         People: '<%= h.inflection.singularize("People") %>'
       },
+      // 文字列をキャメルケースに変換する
+      camelize: {
+        normal: '<%= h.inflection.camelize("message_property") %>',
+        normal2: '<%= h.inflection.camelize("messageProperty") %>',
+        firstSmall: '<%= h.inflection.camelize("message_property", true) %>'
+      }
     }
   }
 }
