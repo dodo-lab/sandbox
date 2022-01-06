@@ -35,9 +35,9 @@ class <%= Name %> {
     }
 
     const changeCaseHelper = {
-      upper: '<%= h.changeCase.upperCase("Upper") %>',
-      lower: '<%= h.changeCase.lowerCase("Lower") %>',
-      camel: '<%= h.changeCase.camelCase("message_properties") %>',
+      upper: '<%= h.changeCase.upper("Upper") %>',
+      lower: '<%= h.changeCase.lower("Lower") %>',
+      camel: '<%= h.changeCase.camel("message_properties") %>',
       constant: '<%= h.changeCase.constant("message_properties") %>',
       dot: '<%= h.changeCase.dot("message_properties") %>',
       header: '<%= h.changeCase.header("message_properties") %>',
