@@ -1,8 +1,12 @@
 ---
-# npx hygen class new --name [ClassName]
-to: app/<%=name%>.js
+# npx hygen class new --name [ClassName] <--requireConstructor>
+to: app/<%= name %>.js
 ---
-class <%= Name %> {
+class <%= name %> {
+<% if(locals.requireConstructor) { -%>
+  constructor() {}
+
+<% } -%>
   work() {
     const inflectionHelper = {
       // 文字列を複数形に変換
