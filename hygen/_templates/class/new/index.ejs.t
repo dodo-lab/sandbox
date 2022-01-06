@@ -1,6 +1,14 @@
 ---
 # npx hygen class new --name [ClassName] <--requireConstructor>
 to: app/<%= name %>.js
+
+# 既にファイルが存在しても、強制的に上書き
+force: true
+
+# 既にファイルが存在するなら、上書きしない
+# unless_exists: true
+
+# 'force'と'unless_exists'どちらも指定しなければ、対話的に上書き確認される
 ---
 class <%= name %> {
 <% if(locals.requireConstructor) { -%>
