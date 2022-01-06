@@ -4,7 +4,7 @@ to: app/<%=name%>.js
 ---
 class <%= Name %> {
   work() {
-    const helper = {
+    const inflectionHelper = {
       // 文字列を複数形に変換
       pluralize: {
         Hat: '<%= h.inflection.pluralize("Hat") %>',
@@ -32,6 +32,28 @@ class <%= Name %> {
         message_properties_firstSmall: '<%= h.inflection.humanize("message_properties", true) %>',
         MessageProperties: '<%= h.inflection.humanize("MessageProperties") %>'
       }
+    }
+
+    const changeCaseHelper = {
+      upper: '<%= h.changeCase.upperCase("Upper") %>',
+      lower: '<%= h.changeCase.lowerCase("Lower") %>',
+      camel: '<%= h.changeCase.camelCase("message_properties") %>',
+      constant: '<%= h.changeCase.constant("message_properties") %>',
+      dot: '<%= h.changeCase.dot("message_properties") %>',
+      header: '<%= h.changeCase.header("message_properties") %>',
+      isLower: '<%= h.changeCase.isLower("message_properties") %>',
+      isUpper: '<%= h.changeCase.isUpper("message_properties") %>',
+      lower: '<%= h.changeCase.lower("Message_Properties") %>',
+      lcFirst: '<%= h.changeCase.lcFirst("Message_Properties") %>',
+      no: '<%= h.changeCase.no("message_properties") %>',
+      param: '<%= h.changeCase.param("message_properties") %>',
+      pascal: '<%= h.changeCase.pascal("message_properties") %>',
+      path: '<%= h.changeCase.path("message_properties") %>',
+      sentence: '<%= h.changeCase.sentence("message_properties") %>',
+      snake: '<%= h.changeCase.snake("message_properties") %>',
+      swap: '<%= h.changeCase.swap("message_properties") %>',
+      title: '<%= h.changeCase.title("message_properties") %>',
+      upper: '<%= h.changeCase.upper("message_properties") %>',
     }
   }
 }
