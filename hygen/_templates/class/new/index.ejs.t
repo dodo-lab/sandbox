@@ -59,5 +59,15 @@ class <%= name %> {
       title: '<%= h.changeCase.title("message_properties") %>',
       upper: '<%= h.changeCase.upper("message_properties") %>',
     }
+
+    // 定義済の変数
+    const predefinedValiables = {
+      templates: '<%= templates %>',
+      actionfolder: '<%= actionfolder %>',
+      generator: '<%= generator %>',
+      action: '<%= action %>',
+      subaction: '<%= subaction %>',
+      cwd: '<%= cwd %>',
+    }
   }
 }
