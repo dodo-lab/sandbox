@@ -77,6 +77,13 @@ class ButtonClickTest {
         textView2.check(matches(withText("Button Clicked")))
     }
 
+    @Test
+    fun buttonClickTestManual() {
+        onView(withId(R.id.text)).check(matches(withText("Hello World!")))
+        onView(withId(R.id.button)).perform(click())
+        onView(withId(R.id.text)).check(matches(withText("Button Clicked")))
+    }
+
     private fun childAtPosition(
         parentMatcher: Matcher<View>, position: Int
     ): Matcher<View> {
