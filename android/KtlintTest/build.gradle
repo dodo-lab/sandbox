@@ -13,6 +13,23 @@ buildscript {
     }
 }
 
+plugins {
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ktlint {
+    debug = false
+    verbose = true
+    android = true
+    outputToConsole = true
+    ignoreFailures = true
+    enableExperimentalRules = true
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
+    }
 }
