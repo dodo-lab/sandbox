@@ -1,24 +1,10 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { Address, AddressInfo } from "components/Address";
 import React, { useState } from "react";
 import styles from "../styles/Home.module.css";
 
-type Request = {
-  zipcode: string;
-};
-
-type Address = {
-  zipcode: string;
-  prefcode: string;
-  address1: string;
-  address2: string;
-  address3: string;
-  kana1: string;
-  kana2: string;
-  kana3: string;
-};
-
 type Response = {
-  results: Address[];
+  results: AddressInfo[];
 };
 
 const config: AxiosRequestConfig = {
@@ -28,25 +14,32 @@ const config: AxiosRequestConfig = {
 const normalAxios = axios.create(config);
 const interceptAxios = axios.create(config);
 
+// リクエストのインターセプト
+interceptAxios.interceptors.request.use((config) => {
+  return { ...config, params: { zipcode: "7830061" } };
+});
+
 const Interceptors: React.FC = () => {
-  const [normalResponse, setNormalResponse] = useState<Address[]>([]);
+  const [normalResponse, setNormalResponse] = useState<AddressInfo | undefined>(undefined);
+  const [interceptResponse, setInterceptResponse] = useState<AddressInfo | undefined>(undefined);
 
   const normalRequest = async () => {
     const res = await normalAxios.get<Response>("", { params: { zipcode: "7830060" } });
-    setNormalResponse(res.data.results);
+    setNormalResponse(res.data.results[0]);
+  };
+
+  const interceptRequest = async () => {
+    const res = await interceptAxios.get<Response>("", { params: { zipcode: "7830060" } });
+    setInterceptResponse(res.data.results[0]);
   };
 
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <button onClick={normalRequest}>Normal</button>
-        {normalResponse.map((v) => (
-          <p key={v.zipcode}>
-            {v.address1}
-            {v.address2}
-            {v.address3}
-          </p>
-        ))}
+        <Address addressInfo={normalResponse} />
+        <button onClick={interceptRequest}>Intercept</button>
+        <Address addressInfo={interceptResponse} />
       </main>
     </div>
   );
