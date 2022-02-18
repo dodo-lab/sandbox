@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export type AddressInfo = {
   zipcode: string;
@@ -15,7 +15,7 @@ type Props = {
   addressInfo?: AddressInfo;
 };
 
-export const Address: React.FC<Props> = ({ addressInfo }) => {
+export const Address: React.FC<Props> = ({addressInfo}) => {
   return (
     <>
       {addressInfo && (
