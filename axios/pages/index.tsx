@@ -3,6 +3,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 
+const links = ['interceptors', 'cancellation'];
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -13,9 +15,11 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <Link href="/interceptors">
-          <a>interceptors</a>
-        </Link>
+        {links.map(v => (
+          <Link key={v} href={`/${v}`}>
+            <a>{v}</a>
+          </Link>
+        ))}
       </main>
     </div>
   );
