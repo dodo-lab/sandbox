@@ -1,8 +1,28 @@
-import './style.css';
+function isSourceCodeComment(strings: string[]) {
+  for (const str of strings) {
+    if (str.trim().startsWith('//')) {
+      return true;
+    }
+  }
 
-const app = document.querySelector<HTMLDivElement>('#app')!;
+  return false;
+}
 
-app.innerHTML = `
-  <h1>Hello Vite!</h1>
-  <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
-`;
+addEventListener('mouseup', () => {
+  const selection = document.getSelection()?.toString();
+  if (selection) {
+    const lines = selection.split('\n');
+    if (isSourceCodeComment(lines)) {
+      let toClipboard = '';
+      for (const line of lines) {
+        const convertedLine = line.trim().replace(/^\/\/\/* */, '');
+        toClipboard += convertedLine;
+        if (convertedLine.endsWith('.')) {
+          toClipboard += '\n';
+        }
+      }
+
+      navigator.clipboard.writeText(toClipboard);
+    }
+  }
+});
