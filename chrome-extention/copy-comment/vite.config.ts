@@ -1,4 +1,5 @@
 import { resolve } from 'path';
+import copy from 'rollup-plugin-copy';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -12,4 +13,16 @@ export default defineConfig({
       },
     },
   },
+  plugins: [
+    copy({
+      verbose: true,
+      hook: 'writeBundle',
+      targets: [
+        {
+          src: 'manifest.json',
+          dest: 'dist',
+        },
+      ],
+    }),
+  ],
 });
