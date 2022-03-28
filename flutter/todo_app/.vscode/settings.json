@@ -3,5 +3,8 @@
     "editor.defaultFormatter": "Dart-Code.dart-code",
     "editor.formatOnSave": true,
     "editor.rulers": [100],
-  }
+  },
+  "cSpell.words": [
+    "todos"
+  ]
 }
