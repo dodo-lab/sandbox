@@ -6,12 +6,23 @@ class TodoListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final todos = ['顔を洗う', '歯磨きをする', '寝る'];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todo一覧'),
       ),
-      body: const Center(
-        child: Text('Todoリスト一覧画面'),
+      body: Center(
+        child: ListView.builder(
+          itemCount: todos.length,
+          itemBuilder: (context, index) {
+            return Card(
+              child: ListTile(
+                title: Text(todos[index]),
+              ),
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
