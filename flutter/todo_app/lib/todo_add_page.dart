@@ -2,8 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class TodoAddPage extends StatelessWidget {
+class TodoAddPage extends StatefulWidget {
   const TodoAddPage({Key? key}) : super(key: key);
+
+  @override
+  State<TodoAddPage> createState() => _TodoAddPageState();
+}
+
+class _TodoAddPageState extends State<TodoAddPage> {
+  final _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +23,16 @@ class TodoAddPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const TextField(),
+            TextField(
+              controller: _controller,
+            ),
             const SizedBox(height: 8),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pop(_controller.text);
+                },
                 child: const Text('Todo追加'),
               ),
             ),
