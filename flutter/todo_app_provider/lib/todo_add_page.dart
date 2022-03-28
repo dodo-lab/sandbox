@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/providers/todo_data.dart';
 
 class TodoAddPage extends StatefulWidget {
   const TodoAddPage({Key? key}) : super(key: key);
@@ -14,6 +16,8 @@ class _TodoAddPageState extends State<TodoAddPage> {
 
   @override
   Widget build(BuildContext context) {
+    final todoData = context.read<TodoData>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todo追加'),
@@ -31,7 +35,8 @@ class _TodoAddPageState extends State<TodoAddPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pop(_controller.text);
+                  todoData.add(_controller.text);
+                  Navigator.of(context).pop();
                 },
                 child: const Text('Todo追加'),
               ),
