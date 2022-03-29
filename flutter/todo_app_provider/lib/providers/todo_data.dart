@@ -1,17 +1,19 @@
 import 'package:flutter/foundation.dart';
 
 class TodoData extends ChangeNotifier {
-  final List<String> todos;
+  final List<String> _todos;
 
-  TodoData(this.todos);
+  List<String> get todos => _todos;
+
+  TodoData(List<String> todos) : _todos = todos;
 
   void add(String todo) {
-    todos.add(todo);
+    _todos.add(todo);
     notifyListeners();
   }
 
   void complete(int index) {
-    todos.removeAt(index);
+    _todos.removeAt(index);
     notifyListeners();
   }
 }
