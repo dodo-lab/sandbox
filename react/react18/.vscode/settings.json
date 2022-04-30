@@ -1,0 +1,11 @@
+{
+  "files.watcherExclude": {
+    "public/**": true,
+    ".next/**": true,
+    "node_modules/**": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": ["source.organizeImports", "source.fixAll.eslint"],
+  "cSpell.words": ["fontsource"]
+}
