@@ -21,6 +21,7 @@ const theme = createTheme({
 const linkItems: LinkItem[] = [
   {name: 'Top', link: '/'},
   {name: 'No Suspense', link: '/suspense/no-suspense'},
+  {name: 'Suspense', link: '/suspense/suspense'},
 ];
 
 function MyApp({Component, pageProps}: AppProps) {
