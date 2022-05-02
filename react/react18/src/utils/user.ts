@@ -1,4 +1,5 @@
 import faker from '@faker-js/faker';
+import {useEffect, useState} from 'react';
 
 const usersMap = new Map<string, string[]>();
 
@@ -11,10 +12,19 @@ export async function fetchUserNames(num: number) {
   return [...Array(num)].map(_ => faker.name.firstName());
 }
 
+export function useUserNamesWithFetch(num: number) {
+  const [userNames, setUserNames] = useState<string[] | undefined>(undefined);
+
+  useEffect(() => {
+    fetchUserNames(num).then(setUserNames);
+  }, [num]);
+
+  return userNames;
+}
+
 export function useUserNamesWithSuspense(num: number, key: string) {
   const cacheData = usersMap.get(key);
   if (cacheData === undefined) {
-    console.log('throw');
     throw fetchUserNames(num).then(users => usersMap.set(key, users));
   }
 

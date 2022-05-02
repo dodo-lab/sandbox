@@ -7,11 +7,11 @@ const Page: NextPage = () => {
   const key = 'suspense_' + Math.random();
 
   return (
-    <Suspense fallback={<CircularProgress />}>
-      <Container maxWidth="xl">
+    <Container maxWidth="xl">
+      <Suspense fallback={<CircularProgress />}>
         <UserNamesWithSuspense cacheKey={key} />
-      </Container>
-    </Suspense>
+      </Suspense>
+    </Container>
   );
 };
 
