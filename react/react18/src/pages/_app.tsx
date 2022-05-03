@@ -20,6 +20,7 @@ const theme = createTheme({
 
 const linkItems: LinkItem[] = [
   {name: 'Top', link: '/'},
+  {name: 'Auto Batching', link: '/auto-batching'},
   {name: 'No Suspense', link: '/suspense/no-suspense'},
   {name: 'Suspense', link: '/suspense/suspense'},
   {name: 'Suspense（React Query）', link: '/suspense/suspense-react-query'},
