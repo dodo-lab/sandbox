@@ -7,6 +7,12 @@ function sleep(msec: number) {
   return new Promise(resolve => setTimeout(resolve, msec));
 }
 
+export async function fetchError(num: number) {
+  await sleep(500 + Math.floor(Math.random() * 500));
+  throw Error('not found');
+  return [...Array(num)].map(_ => faker.name.firstName());
+}
+
 export async function fetchUserNames(num: number) {
   await sleep(500 + Math.floor(Math.random() * 500));
   return [...Array(num)].map(_ => faker.name.firstName());
