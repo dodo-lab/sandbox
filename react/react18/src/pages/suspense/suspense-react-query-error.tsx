@@ -1,4 +1,5 @@
-import {Button, CircularProgress, Container, Typography} from '@mui/material';
+import {CircularProgress, Container} from '@mui/material';
+import {ErrorFallback} from 'components/ErrorFallback';
 import {UserNamesWithReactQueryError} from 'components/UserNamesWithReactQueryError';
 import type {NextPage} from 'next';
 import {Suspense} from 'react';
@@ -12,16 +13,7 @@ const Page: NextPage = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Container maxWidth="xl">
-        <ErrorBoundary
-          onReset={reset}
-          fallbackRender={({error, resetErrorBoundary}) => (
-            <>
-              <Typography>Error: {error.message}</Typography>
-              <Button variant="contained" onClick={resetErrorBoundary}>
-                retry
-              </Button>
-            </>
-          )}>
+        <ErrorBoundary onReset={reset} fallbackRender={props => <ErrorFallback {...props} />}>
           <Suspense fallback={<CircularProgress />}>
             <UserNamesWithReactQueryError />
           </Suspense>

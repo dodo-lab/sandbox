@@ -1,4 +1,5 @@
-import {Button, CircularProgress, Container, Typography} from '@mui/material';
+import {CircularProgress, Container} from '@mui/material';
+import {ErrorFallback} from 'components/ErrorFallback';
 import {UserNamesWithSwrError} from 'components/UserNamesWithSwrError';
 import type {NextPage} from 'next';
 import {Suspense, useState} from 'react';
@@ -10,18 +11,8 @@ const Page: NextPage = () => {
   return (
     <Container maxWidth="xl">
       <ErrorBoundary
-        fallbackRender={({error, resetErrorBoundary}) => (
-          <>
-            <Typography>Error: {error.message}</Typography>
-            <Button
-              variant="contained"
-              onClick={() => {
-                setKey('suspense_swr_error' + Math.random());
-                resetErrorBoundary();
-              }}>
-              retry
-            </Button>
-          </>
+        fallbackRender={props => (
+          <ErrorFallback {...props} onClick={() => setKey('suspense_swr_error' + Math.random())} />
         )}>
         <Suspense fallback={<CircularProgress />}>
           <UserNamesWithSwrError cacheKey={key} />
