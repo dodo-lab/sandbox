@@ -23,6 +23,7 @@ const linkItems: LinkItem[] = [
   {name: 'No Suspense', link: '/suspense/no-suspense'},
   {name: 'Suspense', link: '/suspense/suspense'},
   {name: 'Suspense（React Query）', link: '/suspense/suspense-react-query'},
+  {name: 'Suspense（SWR）', link: '/suspense/suspense-swr'},
 ];
 
 function MyApp({Component, pageProps}: AppProps) {
