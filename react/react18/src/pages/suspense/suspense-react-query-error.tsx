@@ -4,20 +4,23 @@ import {UserNamesWithReactQueryError} from 'components/UserNamesWithReactQueryEr
 import type {NextPage} from 'next';
 import {Suspense} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
-import {QueryClient, QueryClientProvider, useQueryErrorResetBoundary} from 'react-query';
+import {QueryClient, QueryClientProvider, QueryErrorResetBoundary} from 'react-query';
 
 const Page: NextPage = () => {
   const queryClient = new QueryClient();
-  const {reset} = useQueryErrorResetBoundary();
 
   return (
     <QueryClientProvider client={queryClient}>
       <Container maxWidth="xl">
-        <ErrorBoundary onReset={reset} fallbackRender={props => <ErrorFallback {...props} />}>
-          <Suspense fallback={<CircularProgress />}>
-            <UserNamesWithReactQueryError />
-          </Suspense>
-        </ErrorBoundary>
+        <QueryErrorResetBoundary>
+          {({reset}) => (
+            <ErrorBoundary onReset={reset} fallbackRender={props => <ErrorFallback {...props} />}>
+              <Suspense fallback={<CircularProgress />}>
+                <UserNamesWithReactQueryError />
+              </Suspense>
+            </ErrorBoundary>
+          )}
+        </QueryErrorResetBoundary>
       </Container>
     </QueryClientProvider>
   );
