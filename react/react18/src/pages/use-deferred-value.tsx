@@ -27,9 +27,7 @@ const Page: NextPage = () => {
         onChange={(_, value) => setNum(value as number)}
       />
       <FormControlLabel
-        control={
-          <Switch defaultChecked={enableMemo} value={enableMemo} onChange={(_, checked) => setEnableMemo(checked)} />
-        }
+        control={<Switch defaultChecked={true} value={enableMemo} onChange={(_, checked) => setEnableMemo(checked)} />}
         label="メモ化"
       />
       {enableMemo
