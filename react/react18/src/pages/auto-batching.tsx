@@ -1,4 +1,4 @@
-import {Button, Container, Typography} from '@mui/material';
+import {Box, Button, Container, Typography} from '@mui/material';
 import type {NextPage} from 'next';
 import {useState} from 'react';
 import {flushSync} from 'react-dom';
@@ -21,6 +21,20 @@ const Page: NextPage = () => {
     }, 1);
   };
 
+  const increment2 = () => {
+    setTimeout(() => {
+      setCount1(c => c + 1);
+      setCount2(c => c + 10);
+      setCount3(c => c + 100);
+    }, 1);
+
+    setTimeout(() => {
+      setCount1(c => c + 1);
+      setCount2(c => c + 10);
+      setCount3(c => c + 100);
+    }, 1);
+  };
+
   const flushIncrement = () => {
     setTimeout(() => {
       flushSync(() => setCount1(c => c + 1));
@@ -35,12 +49,17 @@ const Page: NextPage = () => {
       <Typography>count2: {count2}</Typography>
       <Typography>count3: {count3}</Typography>
       <Typography sx={{my: 2}}>renderCount: {renderCount}</Typography>
-      <Button variant="contained" onClick={increment}>
-        increment
-      </Button>
-      <Button sx={{ml: 1}} variant="contained" onClick={flushIncrement}>
-        increment(React17)
-      </Button>
+      <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Button variant="contained" onClick={increment}>
+          increment
+        </Button>
+        <Button variant="contained" onClick={increment2}>
+          increment × 2
+        </Button>
+        <Button variant="contained" onClick={flushIncrement}>
+          increment(React17)
+        </Button>
+      </Box>
     </Container>
   );
 };
