@@ -28,6 +28,7 @@ const linkItems: LinkItem[] = [
   {name: 'Suspense & Error（React Query）', link: '/suspense/suspense-react-query-error'},
   {name: 'Suspense & Error（SWR）', link: '/suspense/suspense-swr-error'},
   {name: 'useDeferredValue', link: '/use-deferred-value'},
+  {name: 'useTransition', link: '/use-transition'},
 ];
 
 function MyApp({Component, pageProps}: AppProps) {
