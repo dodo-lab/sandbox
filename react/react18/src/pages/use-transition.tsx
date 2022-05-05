@@ -1,4 +1,4 @@
-import {Box, CircularProgress, Container, FormControlLabel, Slider, Switch} from '@mui/material';
+import {Box, CircularProgress, Container, FormControlLabel, Slider, Switch, Typography} from '@mui/material';
 import {Shape} from 'components/Shape';
 import type {NextPage} from 'next';
 import {useMemo, useState, useTransition} from 'react';
@@ -23,6 +23,7 @@ const Page: NextPage = () => {
   return (
     <Container maxWidth="xl">
       <FormControlLabel
+        label="useTransition"
         control={
           <Switch
             defaultChecked={true}
@@ -30,10 +31,9 @@ const Page: NextPage = () => {
             onChange={(_, checked) => setEnableTransition(checked)}
           />
         }
-        label="useTransition"
       />
+      <Typography sx={{mt: 2}}>Generate</Typography>
       <Slider
-        sx={{mt: 4}}
         valueLabelDisplay="auto"
         min={3}
         max={5}
@@ -47,8 +47,9 @@ const Page: NextPage = () => {
           }
         }}
       />
+      <Typography sx={{mt: 2}}>Total</Typography>
       <Slider
-        sx={{my: 2}}
+        sx={{mb: 2}}
         valueLabelDisplay="auto"
         min={3}
         max={8}
