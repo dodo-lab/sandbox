@@ -1,4 +1,4 @@
-import {Box, CircularProgress, Container, Slider} from '@mui/material';
+import {Box, CircularProgress, Container, FormControlLabel, Slider, Switch} from '@mui/material';
 import {Shape} from 'components/Shape';
 import type {NextPage} from 'next';
 import {useMemo, useState, useTransition} from 'react';
@@ -9,6 +9,7 @@ const Page: NextPage = () => {
   const [isPending, startTransition] = useTransition();
   const [generate, setGenerate] = useState(3);
   const [total, setTotal] = useState(3);
+  const [enableTransition, setEnableTransition] = useState(true);
 
   const shape = useMemo(
     () => (
@@ -21,15 +22,29 @@ const Page: NextPage = () => {
 
   return (
     <Container maxWidth="xl">
+      <FormControlLabel
+        control={
+          <Switch
+            defaultChecked={true}
+            value={enableTransition}
+            onChange={(_, checked) => setEnableTransition(checked)}
+          />
+        }
+        label="useTransition"
+      />
       <Slider
         sx={{mt: 4}}
         valueLabelDisplay="auto"
         min={3}
         max={5}
         onChange={(_, value) => {
-          startTransition(() => {
+          if (enableTransition) {
+            startTransition(() => {
+              setGenerate(value as number);
+            });
+          } else {
             setGenerate(value as number);
-          });
+          }
         }}
       />
       <Slider
@@ -38,9 +53,13 @@ const Page: NextPage = () => {
         min={3}
         max={8}
         onChange={(_, value) => {
-          startTransition(() => {
+          if (enableTransition) {
+            startTransition(() => {
+              setTotal(value as number);
+            });
+          } else {
             setTotal(value as number);
-          });
+          }
         }}
       />
       {shape}
