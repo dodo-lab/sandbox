@@ -37,7 +37,7 @@ function MyApp({Component, pageProps}: AppProps) {
       <CssBaseline />
       <Box sx={{display: 'flex'}}>
         <SideBar linkItems={linkItems} />
-        <Box component="main" sx={{flexGrow: 1}}>
+        <Box component="main" sx={{flexGrow: 1, height: '100vh'}}>
           <Component {...pageProps} />
         </Box>
       </Box>
