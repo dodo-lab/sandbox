@@ -8,13 +8,18 @@
  * @format
  */
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, SafeAreaView, Text} from 'react-native';
 
 let globalValue = 0;
 
 const App = () => {
   const [stateValue, setStateValue] = useState(0);
+
+  useEffect(() => {
+    console.log('mount.');
+    return () => console.log('unmount.');
+  }, []);
 
   return (
     <SafeAreaView>
