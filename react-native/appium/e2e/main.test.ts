@@ -1,4 +1,5 @@
 import 'jest-environment-webdriverio';
+import {ScreenShot} from './screenShot';
 
 jest.setTimeout(1000 * 10);
 
@@ -6,7 +7,7 @@ async function sleep(msec: number) {
   return new Promise(resolve => setTimeout(resolve, msec));
 }
 
-const SCREEN_CHANGE_WAIT_MSEC = 500;
+const SCREEN_CHANGE_WAIT_MSEC = 2000;
 
 describe('main', () => {
   test('録画開始', async () => {
@@ -14,7 +15,7 @@ describe('main', () => {
     await sleep(2000);
   });
   test('スクリーンショット', async () => {
-    await browser.saveScreenshot(`./screenshot/top.png`);
+    await ScreenShot.save('top.png');
   });
 
   test('Basic画面に遷移した後、トップに戻る', async () => {
@@ -24,12 +25,12 @@ describe('main', () => {
     element.click();
 
     await sleep(SCREEN_CHANGE_WAIT_MSEC);
-    await browser.saveScreenshot(`./screenshot/basic.png`);
+    await ScreenShot.save('basic.png');
 
     await browser.back();
 
     await sleep(SCREEN_CHANGE_WAIT_MSEC);
-    await browser.saveScreenshot(`./screenshot/basic_to_top.png`);
+    await ScreenShot.save('basic_to_top.png');
   });
 
   test('座標指定でBasic画面に遷移した後、トップに戻る', async () => {
@@ -59,6 +60,10 @@ describe('main', () => {
   });
   test('録画終了', async () => {
     await browser.saveRecordingScreen(`./screenshot/recording.mp4`);
+  });
+  test('イメージの差分チェック', async () => {
+    const ret = ScreenShot.isDiff();
+    expect(ret).toBeFalsy();
   });
 });
 
