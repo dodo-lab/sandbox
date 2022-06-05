@@ -6,6 +6,8 @@ async function sleep(msec: number) {
   return new Promise(resolve => setTimeout(resolve, msec));
 }
 
+const SCREEN_CHANGE_WAIT_MSEC = 500;
+
 describe('main', () => {
   test('録画開始', async () => {
     browser.startRecordingScreen();
@@ -21,12 +23,12 @@ describe('main', () => {
 
     element.click();
 
-    await sleep(1000);
+    await sleep(SCREEN_CHANGE_WAIT_MSEC);
     await browser.saveScreenshot(`./screenshot/basic.png`);
 
     await browser.back();
 
-    await sleep(1000);
+    await sleep(SCREEN_CHANGE_WAIT_MSEC);
     await browser.saveScreenshot(`./screenshot/basic_to_top.png`);
   });
 
@@ -51,13 +53,24 @@ describe('main', () => {
       // y: rect.y + rect.height * 0.5,
     });
 
-    await sleep(1000);
-
+    await sleep(SCREEN_CHANGE_WAIT_MSEC);
     await browser.back();
-
-    await sleep(500);
+    await sleep(SCREEN_CHANGE_WAIT_MSEC);
   });
   test('録画終了', async () => {
     await browser.saveRecordingScreen(`./screenshot/recording.mp4`);
+  });
+});
+
+describe('describeを分けてもアプリ再起動はせず、逐次処理する', () => {
+  test('座標指定でTouchables画面に遷移した後、トップに戻る', async () => {
+    const element = await browser.$('~linkList_1');
+    await element.waitForDisplayed({timeout: 2000});
+
+    element.click();
+
+    await sleep(SCREEN_CHANGE_WAIT_MSEC);
+    await browser.back();
+    await sleep(SCREEN_CHANGE_WAIT_MSEC);
   });
 });
