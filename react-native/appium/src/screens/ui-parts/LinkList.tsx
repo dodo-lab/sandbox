@@ -14,8 +14,9 @@ export const LinkList: React.FC<Props> = ({data}) => {
     <View style={styles.container}>
       <FlatList
         data={data}
-        renderItem={({item}) => (
+        renderItem={({item, index}) => (
           <ListItem
+            accessibilityLabel={`linkList_${index}`}
             hasTVPreferredFocus={undefined}
             tvParallaxProperties={undefined}
             bottomDivider
