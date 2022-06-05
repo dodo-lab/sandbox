@@ -9,6 +9,7 @@
     "start": "react-native start",
     "test": "jest",
     "test:e2e": "jest e2e --config=e2e/jest.config.js --detectOpenHandles --runInBand",
+    "appium": "appium",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
