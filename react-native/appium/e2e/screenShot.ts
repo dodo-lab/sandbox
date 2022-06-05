@@ -41,7 +41,7 @@ export abstract class ScreenShot {
     }
   }
 
-  static isDiff() {
+  static async isDiff() {
     let isDiff = false;
 
     for (const file of this.files) {
@@ -53,9 +53,15 @@ export abstract class ScreenShot {
       const ret = pixelmatch(accept.data, tmp.data, diff.data, width, height, {threshold: 0.1});
       if (ret !== 0) {
         isDiff = true;
+
+        await sharp(diff.data, {
+          raw: {
+            width,
+            height,
+            channels: 4,
+          },
+        }).toFile(`${DIFF_SCREENSHOT_PATH}/${file}`);
       }
-      console.log(file, ret);
-      fs.writeFileSync(`${DIFF_SCREENSHOT_PATH}/${file}`, PNG.sync.write(diff));
     }
 
     return isDiff;

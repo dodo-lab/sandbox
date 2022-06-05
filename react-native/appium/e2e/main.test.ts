@@ -62,7 +62,7 @@ describe('main', () => {
     await browser.saveRecordingScreen(`./screenshot/recording.mp4`);
   });
   test('イメージの差分チェック', async () => {
-    const ret = ScreenShot.isDiff();
+    const ret = await ScreenShot.isDiff();
     expect(ret).toBeFalsy();
   });
 });
