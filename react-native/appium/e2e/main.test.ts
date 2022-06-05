@@ -7,9 +7,12 @@ async function sleep(msec: number) {
 }
 
 describe('main', () => {
+  test('録画開始', async () => {
+    browser.startRecordingScreen();
+    await sleep(2000);
+  });
   test('スクリーンショット', async () => {
     await browser.saveScreenshot(`./screenshot/top.png`);
-    expect(true).toBeTruthy();
   });
 
   test('Basic画面に遷移した後、トップに戻る', async () => {
@@ -53,5 +56,8 @@ describe('main', () => {
     await browser.back();
 
     await sleep(500);
+  });
+  test('録画終了', async () => {
+    await browser.saveRecordingScreen(`./screenshot/recording.mp4`);
   });
 });
