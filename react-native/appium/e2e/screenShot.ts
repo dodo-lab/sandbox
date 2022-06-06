@@ -11,7 +11,7 @@ type SystemBars = {
 
 const BASE_SCREENSHOT_PATH = './screenshot';
 const ACCEPT_SCREENSHOT_PATH = `${BASE_SCREENSHOT_PATH}/accept`;
-const TMP_SCREENSHOT_PATH = `${BASE_SCREENSHOT_PATH}/tmp`;
+const NEW_SCREENSHOT_PATH = `${BASE_SCREENSHOT_PATH}/new`;
 const DIFF_SCREENSHOT_PATH = `${BASE_SCREENSHOT_PATH}/diff`;
 
 export abstract class ScreenShot {
@@ -20,8 +20,8 @@ export abstract class ScreenShot {
   static async save(fileName: string) {
     this.files.push(fileName);
 
-    const tmpFilePath = `${TMP_SCREENSHOT_PATH}/_${fileName}`;
-    const filePath = `${TMP_SCREENSHOT_PATH}/${fileName}`;
+    const tmpFilePath = `${NEW_SCREENSHOT_PATH}/_${fileName}`;
+    const filePath = `${NEW_SCREENSHOT_PATH}/${fileName}`;
     await browser.saveScreenshot(tmpFilePath);
 
     const systemBars = (await browser.getSystemBars()) as unknown as SystemBars;
@@ -45,12 +45,12 @@ export abstract class ScreenShot {
     let isDiff = false;
 
     for (const file of this.files) {
-      const accept = PNG.sync.read(fs.readFileSync(`${ACCEPT_SCREENSHOT_PATH}/${file}`));
-      const tmp = PNG.sync.read(fs.readFileSync(`${TMP_SCREENSHOT_PATH}/${file}`));
-      const {width, height} = tmp;
+      const acceptData = PNG.sync.read(fs.readFileSync(`${ACCEPT_SCREENSHOT_PATH}/${file}`));
+      const newData = PNG.sync.read(fs.readFileSync(`${NEW_SCREENSHOT_PATH}/${file}`));
+      const {width, height} = newData;
       const diff = new PNG({width, height});
 
-      const ret = pixelmatch(accept.data, tmp.data, diff.data, width, height, {threshold: 0.1});
+      const ret = pixelmatch(acceptData.data, newData.data, diff.data, width, height, {threshold: 0.1});
       if (ret !== 0) {
         isDiff = true;
 
