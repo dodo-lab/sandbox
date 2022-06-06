@@ -9,6 +9,8 @@ async function sleep(msec: number) {
 
 const SCREEN_CHANGE_WAIT_MSEC = 2000;
 
+ScreenShot.init();
+
 describe('main', () => {
   test('録画開始', async () => {
     browser.startRecordingScreen();

@@ -14,8 +14,20 @@ const ACCEPT_SCREENSHOT_PATH = `${BASE_SCREENSHOT_PATH}/accept`;
 const NEW_SCREENSHOT_PATH = `${BASE_SCREENSHOT_PATH}/new`;
 const DIFF_SCREENSHOT_PATH = `${BASE_SCREENSHOT_PATH}/diff`;
 
+function safeMkdir(path: string) {
+  if (!fs.existsSync(path)) {
+    fs.mkdirSync(path);
+  }
+}
+
 export abstract class ScreenShot {
   private static files: string[] = [];
+
+  static init() {
+    safeMkdir(ACCEPT_SCREENSHOT_PATH);
+    safeMkdir(NEW_SCREENSHOT_PATH);
+    safeMkdir(DIFF_SCREENSHOT_PATH);
+  }
 
   static async save(fileName: string) {
     this.files.push(fileName);
