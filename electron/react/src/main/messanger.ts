@@ -9,6 +9,6 @@ export abstract class Messenger {
   }
 
   static send<T extends IpcKey>(key: T, ...args: Parameters<Ipc[T]>) {
-    this.mainWindow?.webContents.send(key, args);
+    this.mainWindow?.webContents.send(key, ...args);
   }
 }

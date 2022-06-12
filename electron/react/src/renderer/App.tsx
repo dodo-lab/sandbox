@@ -2,11 +2,12 @@ import { useEffect } from 'react';
 import { MemoryRouter as Router, Route, Routes } from 'react-router-dom';
 import icon from '../../assets/icon.svg';
 import './App.css';
+import { Messenger } from './messenger';
 
 const Hello = () => {
   useEffect(() => {
-    window.electron.ipcRenderer.on('updateData', (...args) => {
-      console.log(args);
+    Messenger.on('updateData', (data) => {
+      console.log(data);
     });
   }, []);
 
