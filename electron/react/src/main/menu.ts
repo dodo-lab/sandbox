@@ -1,4 +1,11 @@
-import { app, BrowserWindow, Menu, MenuItemConstructorOptions } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  dialog,
+  Menu,
+  MenuItemConstructorOptions,
+} from 'electron';
+import fs from 'fs';
 import { isMac, macOrOther } from './utils/platform';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
@@ -72,8 +79,30 @@ export default class MenuBuilder {
               mac: 'Command+O',
               other: 'Ctrl+O',
             }),
-            click: () => {
-              console.log('open file');
+            click: async () => {
+              const { canceled, filePaths } = await dialog.showOpenDialog(
+                this.mainWindow,
+                {
+                  filters: [{ name: 'JSON Files', extensions: ['json'] }],
+                }
+              );
+              if (!canceled) {
+                try {
+                  const data = await fs.promises.readFile(filePaths[0], {
+                    encoding: 'utf-8',
+                  });
+
+                  this.mainWindow.webContents.send(
+                    'update-data',
+                    JSON.parse(data)
+                  );
+                } catch (e) {
+                  dialog.showErrorBox(
+                    'エラー',
+                    'データの読み込みに失敗しました'
+                  );
+                }
+              }
             },
           },
           ...(isMac

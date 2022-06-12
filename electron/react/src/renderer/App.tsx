@@ -1,8 +1,15 @@
+import { useEffect } from 'react';
 import { MemoryRouter as Router, Route, Routes } from 'react-router-dom';
 import icon from '../../assets/icon.svg';
 import './App.css';
 
 const Hello = () => {
+  useEffect(() => {
+    window.electron.ipcRenderer.on('update-data', (...args) => {
+      console.log(args);
+    });
+  }, []);
+
   return (
     <div>
       <div className="Hello">
