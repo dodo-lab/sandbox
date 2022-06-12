@@ -5,7 +5,7 @@ import './App.css';
 
 const Hello = () => {
   useEffect(() => {
-    window.electron.ipcRenderer.on('update-data', (...args) => {
+    window.electron.ipcRenderer.on('updateData', (...args) => {
       console.log(args);
     });
   }, []);

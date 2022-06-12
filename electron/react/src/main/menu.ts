@@ -6,12 +6,8 @@ import {
   MenuItemConstructorOptions,
 } from 'electron';
 import fs from 'fs';
+import { Messenger } from './messanger';
 import { isMac, macOrOther } from './utils/platform';
-
-interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
-  selector?: string;
-  submenu?: DarwinMenuItemConstructorOptions[] | Menu;
-}
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
@@ -92,10 +88,7 @@ export default class MenuBuilder {
                     encoding: 'utf-8',
                   });
 
-                  this.mainWindow.webContents.send(
-                    'update-data',
-                    JSON.parse(data)
-                  );
+                  Messenger.send('updateData', JSON.parse(data));
                 } catch (e) {
                   dialog.showErrorBox(
                     'エラー',
