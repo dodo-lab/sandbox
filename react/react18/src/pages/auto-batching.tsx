@@ -1,16 +1,15 @@
 import {Box, Button, Container, Typography} from '@mui/material';
 import type {NextPage} from 'next';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {flushSync} from 'react-dom';
-
-let renderCount = 0;
 
 const Page: NextPage = () => {
   const [count1, setCount1] = useState(0);
   const [count2, setCount2] = useState(0);
   const [count3, setCount3] = useState(0);
+  const renderCount = useRef(0);
 
-  renderCount++;
+  renderCount.current++;
   console.log('rendered', count1, count2, count3);
 
   const increment = () => {
@@ -48,7 +47,7 @@ const Page: NextPage = () => {
       <Typography>count1: {count1}</Typography>
       <Typography>count2: {count2}</Typography>
       <Typography>count3: {count3}</Typography>
-      <Typography sx={{my: 2}}>renderCount: {renderCount}</Typography>
+      <Typography sx={{my: 2}}>renderCount: {renderCount.current}</Typography>
       <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
         <Button variant="contained" onClick={increment}>
           increment
