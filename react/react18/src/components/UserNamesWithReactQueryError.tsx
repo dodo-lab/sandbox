@@ -8,6 +8,8 @@ export const UserNamesWithReactQueryError: React.FC = () => {
     suspense: true,
     cacheTime: 0,
     retry: 0,
+    // コンポーネント側でエラーハンドリングしたい場合、'useErrorBoundary: false'を指定.
+    // useErrorBoundary: false,
   });
 
   return <UserNames userNames={data ?? []} />;
