@@ -13,6 +13,7 @@
     "formik": "^2.2.9",
     "react": "17.0.2",
     "react-native": "0.68.2",
+    "react-native-elements": "^4.0.0-rc.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {
