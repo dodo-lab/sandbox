@@ -1,38 +1,54 @@
-import {Container, FormControlLabel, Slider, Switch, TextField, Typography} from '@mui/material';
+import {Box, Container, Slider, styled, TextField, Typography} from '@mui/material';
 import type {NextPage} from 'next';
 import {useDeferredValue, useMemo, useState} from 'react';
 
+const BorderBox = styled(Box)({
+  flex: 1,
+  padding: 16,
+  borderStyle: 'solid',
+  borderWidth: 1,
+});
+
 const Page: NextPage = () => {
   const [text, setText] = useState('');
-  const [enableMemo, setEnableMemo] = useState(true);
+  const [beforeDeferralText, setBeforeDeferralText] = useState('');
+  const deferredText = useDeferredValue(beforeDeferralText);
   const [num, setNum] = useState(1);
-  const deferredText = useDeferredValue(text);
-
-  console.log('[t]', text);
-  console.log('[d]', deferredText);
 
   const deferredTextsMemo = useMemo(() => {
     return [...Array(num)].map((_, index) => <Typography key={index}>{deferredText}</Typography>);
   }, [deferredText, num]);
 
+  const textsMemo = useMemo(() => {
+    return [...Array(num)].map((_, index) => <Typography key={index}>{text}</Typography>);
+  }, [num, text]);
+
   return (
     <Container maxWidth="xl">
-      <TextField fullWidth variant="standard" label="input" value={text} onChange={e => setText(e.target.value)} />
       <Slider
-        sx={{my: 2}}
+        sx={{my: 4}}
         valueLabelDisplay="auto"
         min={1}
         max={1000}
         value={num}
         onChange={(_, value) => setNum(value as number)}
       />
-      <FormControlLabel
-        control={<Switch defaultChecked={true} value={enableMemo} onChange={(_, checked) => setEnableMemo(checked)} />}
-        label="メモ化"
-      />
-      {enableMemo
-        ? deferredTextsMemo
-        : [...Array(num)].map((_, index) => <Typography key={index}>{deferredText}</Typography>)}
+      <Box sx={{display: 'flex', gap: 4}}>
+        <BorderBox>
+          <TextField fullWidth variant="standard" label="normal" value={text} onChange={e => setText(e.target.value)} />
+          {textsMemo}
+        </BorderBox>
+        <BorderBox>
+          <TextField
+            fullWidth
+            variant="standard"
+            label="useDeferredValue"
+            value={beforeDeferralText}
+            onChange={e => setBeforeDeferralText(e.target.value)}
+          />
+          {deferredTextsMemo}
+        </BorderBox>
+      </Box>
     </Container>
   );
 };
