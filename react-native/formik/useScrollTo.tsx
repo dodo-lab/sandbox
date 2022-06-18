@@ -1,4 +1,5 @@
-import React, {useCallback, useEffect, useRef} from 'react';
+import {FormikErrors, FormikValues} from 'formik';
+import React, {RefObject, useCallback, useEffect, useRef} from 'react';
 import {findNodeHandle, ScrollView, ScrollViewProps, View, ViewProps} from 'react-native';
 
 type ScrollTargetViewProps<Key extends string> = ViewProps & {
@@ -9,6 +10,28 @@ type ScrollTarget<Key extends string> = {
   name: Key;
   view: View;
 };
+
+function scrollToTarget<Key extends string>(
+  target: ScrollTarget<Key> | undefined,
+  scrollViewRef: RefObject<ScrollView>,
+) {
+  if (target === undefined) {
+    return;
+  }
+
+  const nodeHandle = findNodeHandle(scrollViewRef.current);
+  if (nodeHandle === null) {
+    return;
+  }
+
+  target.view.measureLayout(
+    nodeHandle,
+    (_, y) => {
+      scrollViewRef.current?.scrollTo({y});
+    },
+    () => {},
+  );
+}
 
 export const useScrollTo = <Key extends string>() => {
   const scrollViewRef = useRef<ScrollView>(null);
@@ -34,7 +57,6 @@ export const useScrollTo = <Key extends string>() => {
 
     useEffect(() => {
       if (viewRef.current !== null) {
-        console.log('addTarget', name);
         addTarget({name, view: viewRef.current});
       }
     }, [name]);
@@ -48,19 +70,17 @@ export const useScrollTo = <Key extends string>() => {
 
   const scrollTo = useCallback((name: Key) => {
     const target = scrollTargetsRef.current.find(v => v.name === name);
-    if (target !== undefined) {
-      const nodeHandle = findNodeHandle(scrollViewRef.current);
-      if (nodeHandle !== null) {
-        target.view.measureLayout(
-          nodeHandle,
-          (_, y) => {
-            scrollViewRef.current?.scrollTo({y});
-          },
-          () => {},
-        );
-      }
+    scrollToTarget(target, scrollViewRef);
+  }, []);
+
+  const scrollToFirstError = useCallback((errors: FormikErrors<FormikValues>) => {
+    const errorEntries = Object.entries(errors);
+    if (errorEntries.length > 0) {
+      const [firstErrorName] = errorEntries[0];
+      const target = scrollTargetsRef.current.find(v => v.name === firstErrorName);
+      scrollToTarget(target, scrollViewRef);
     }
   }, []);
 
-  return {ScrollViewRoot, ScrollTargetView, scrollTo};
+  return {ScrollViewRoot, ScrollTargetView, scrollTo, scrollToFirstError};
 };

@@ -36,7 +36,7 @@ const validationSchema = () =>
   });
 
 const App = () => {
-  const {ScrollTargetView, ScrollViewRoot, scrollTo} = useScrollTo<keyof FormValues>();
+  const {ScrollTargetView, ScrollViewRoot, scrollTo, scrollToFirstError} = useScrollTo<keyof FormValues>();
 
   return (
     <ScrollViewRoot>
@@ -73,7 +73,7 @@ const App = () => {
                 title="validate"
                 onPress={async () => {
                   const errors = await props.validateForm();
-                  console.log(errors);
+                  scrollToFirstError(errors);
                 }}
               />
             </>
