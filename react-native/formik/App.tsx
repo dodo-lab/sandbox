@@ -54,7 +54,7 @@ const App = () => {
               </ScrollTargetView>
               <View style={{backgroundColor: 'red', height: 500}} />
               <ScrollTargetView name="address">
-                <Input label="Adress" {...inputPropsFromFormik(props, 'address')} />
+                <Input label="Address" {...inputPropsFromFormik(props, 'address')} />
               </ScrollTargetView>
               <View style={{backgroundColor: 'red', height: 500}} />
               <Button
