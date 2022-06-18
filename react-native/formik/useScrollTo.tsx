@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef} from 'react';
-import {ScrollView, ScrollViewProps, View, ViewProps} from 'react-native';
+import {findNodeHandle, ScrollView, ScrollViewProps, View, ViewProps} from 'react-native';
 
 type ScrollTargetViewProps<Key extends string> = ViewProps & {
   name: Key;
@@ -29,7 +29,7 @@ export const useScrollTo = <Key extends string>() => {
     </ScrollView>
   ));
 
-  const ScrollTargetView: React.FC<ScrollTargetViewProps<Key>> = ({name, children, ...props}) => {
+  const ScrollTargetView: React.FC<ScrollTargetViewProps<Key>> = React.memo(({name, children, ...props}) => {
     const viewRef = useRef<View>(null);
 
     useEffect(() => {
@@ -44,7 +44,23 @@ export const useScrollTo = <Key extends string>() => {
         {children}
       </View>
     );
-  };
+  });
 
-  return {ScrollViewRoot, ScrollTargetView};
+  const scrollTo = useCallback((name: Key) => {
+    const target = scrollTargetsRef.current.find(v => v.name === name);
+    if (target !== undefined) {
+      const nodeHandle = findNodeHandle(scrollViewRef.current);
+      if (nodeHandle !== null) {
+        target.view.measureLayout(
+          nodeHandle,
+          (_, y) => {
+            scrollViewRef.current?.scrollTo({y});
+          },
+          () => {},
+        );
+      }
+    }
+  }, []);
+
+  return {ScrollViewRoot, ScrollTargetView, scrollTo};
 };

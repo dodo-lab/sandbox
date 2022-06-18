@@ -25,7 +25,7 @@ const validationSchema = () =>
   });
 
 const App = () => {
-  const {ScrollTargetView, ScrollViewRoot} = useScrollTo<keyof FormValues>();
+  const {ScrollTargetView, ScrollViewRoot, scrollTo} = useScrollTo<keyof FormValues>();
   const nameRef = useRef<TextInput>(null);
   const viewRef = useRef<View>(null);
 
@@ -47,43 +47,33 @@ const App = () => {
                   ref={nameRef}
                 />
               </ScrollTargetView>
-              <View ref={viewRef} style={{backgroundColor: 'red', height: 800}} />
-              <Input label="Age" value={values.age} onChangeText={handleChange('age')} errorMessage={errors.age} />
+              <View ref={viewRef} style={{backgroundColor: 'red', height: 500}} />
+              <ScrollTargetView name="age">
+                <Input label="Age" value={values.age} onChangeText={handleChange('age')} errorMessage={errors.age} />
+              </ScrollTargetView>
               <View style={{backgroundColor: 'red', height: 500}} />
-              <Input
-                label="Adress"
-                value={values.address}
-                onChangeText={handleChange('address')}
-                errorMessage={errors.address}
-              />
+              <ScrollTargetView name="address">
+                <Input
+                  label="Adress"
+                  value={values.address}
+                  onChangeText={handleChange('address')}
+                  errorMessage={errors.address}
+                />
+              </ScrollTargetView>
               <View style={{backgroundColor: 'red', height: 500}} />
               <Button
-                title="validate"
-                onPress={async () => {
-                  // const _errors = await props.validateForm();
-                  // console.log(_errors);
-                  // console.log('measure', viewRef.current?.measure);
-                  // console.log('measureInWindow', viewRef.current?.measureInWindow);
-                  // console.log('measureLayout', viewRef.current?.measureLayout);
-                  // viewRef.current?.measure((x, y, width, height, pageX, pageY) => {
-                  //   console.log('measure', x, y, width, height, pageX, pageY);
-                  // });
-                  // viewRef.current?.measureInWindow((x, y) => {
-                  //   console.log('measureInWindow', x, y);
-                  // });
-                  // if (scrollViewRef.current) {
-                  //   viewRef.current?.measureLayout(
-                  //     scrollViewRef.current,
-                  //     (left, top) => {
-                  //       console.log('success', left, top);
-                  //     },
-                  //     () => {
-                  //       console.log('failed');
-                  //     },
-                  //   );
-                  // }
+                title="scroll to name"
+                onPress={() => {
+                  scrollTo('name');
                 }}
               />
+              <Button
+                title="scroll to age"
+                onPress={() => {
+                  scrollTo('age');
+                }}
+              />
+              <Button title="validate" onPress={() => {}} />
             </>
           );
         }}
