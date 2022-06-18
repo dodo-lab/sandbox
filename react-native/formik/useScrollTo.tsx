@@ -33,6 +33,18 @@ function scrollToTarget<Key extends string>(
   );
 }
 
+function measureLayoutTop<Key extends string>(target: ScrollTarget<Key>, nodeHandle: number) {
+  return new Promise<number>((resolve, reject) => {
+    target.view.measureLayout(
+      nodeHandle,
+      (_, top) => {
+        resolve(top);
+      },
+      reject,
+    );
+  });
+}
+
 export const useScrollTo = <Key extends string>() => {
   const scrollViewRef = useRef<ScrollView>(null);
   const scrollTargetsRef = useRef<ScrollTarget<Key>[]>([]);
@@ -82,5 +94,34 @@ export const useScrollTo = <Key extends string>() => {
     }
   }, []);
 
-  return {ScrollViewRoot, ScrollTargetView, scrollTo, scrollToFirstError};
+  const scrollToHeadError = useCallback(async (errors: FormikErrors<FormikValues>) => {
+    const nodeHandle = findNodeHandle(scrollViewRef.current);
+    if (nodeHandle === null) {
+      return;
+    }
+
+    const errorNames = Object.keys(errors);
+    let top: number | null = null;
+
+    for (const errorName of errorNames) {
+      const target = scrollTargetsRef.current.find(v => v.name === errorName);
+      if (target !== undefined) {
+        try {
+          const targetTop = await measureLayoutTop(target, nodeHandle);
+          console.log('measureLayoutTop', errorName, targetTop);
+          if (top === null) {
+            top = targetTop;
+          } else if (top > targetTop) {
+            top = targetTop;
+          }
+        } catch {}
+      }
+    }
+
+    if (top !== null) {
+      scrollViewRef.current?.scrollTo({y: top});
+    }
+  }, []);
+
+  return {ScrollViewRoot, ScrollTargetView, scrollTo, scrollToFirstError, scrollToHeadError};
 };

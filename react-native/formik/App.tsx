@@ -36,7 +36,8 @@ const validationSchema = () =>
   });
 
 const App = () => {
-  const {ScrollTargetView, ScrollViewRoot, scrollTo, scrollToFirstError} = useScrollTo<keyof FormValues>();
+  const {ScrollTargetView, ScrollViewRoot, scrollTo, scrollToFirstError, scrollToHeadError} =
+    useScrollTo<keyof FormValues>();
 
   return (
     <ScrollViewRoot>
@@ -74,6 +75,13 @@ const App = () => {
                 onPress={async () => {
                   const errors = await props.validateForm();
                   scrollToFirstError(errors);
+                }}
+              />
+              <Button
+                title="validate(head error)"
+                onPress={async () => {
+                  const errors = await props.validateForm();
+                  scrollToHeadError(errors);
                 }}
               />
             </>
