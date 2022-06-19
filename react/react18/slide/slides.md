@@ -21,7 +21,7 @@ layout: center-image
 
 # React 18
 
-React 18の新機能について軽く触れたので、デモを交えて紹介します。
+React 18の新機能について、デモを交えて紹介します。
 
 <style>
   h1 { font-size: 2.5rem }
@@ -40,9 +40,58 @@ layout: image-right
 
 ---
 
-# Automatic Batching
+## Automatic Batching
 
-React 17以前でも`onClick`といったReactのイベントハンドラ内での複数のステート更新をグループ化し、再レンダリングの最適化をしていた。
+`Batching`とは複数のステート更新をグループ化し、パフォーマンスを向上させること。
+
+React 17以前でも`onClick`といったReactのイベントハンドラ内では`Batching`を適用していた。
+
+```ts
+const handleClick = () => {
+  setCount(v => v + 1);
+  setFlag(v => !v);
+}
+```
+
+```html
+<button onClick={handleClick}>update</button>
+```
+
+このようなケースでは、`handleClick`内の処理がすべて完了したタイミングで再レンダリングが走る。
+
+---
+
+## Automatic Batching
+
+ただし、Reactのイベントハンドラ外（promise / setTimeout / その他イベント）には適用されていなかった。
+
+```ts
+const handleClick = () => {
+  setTimeout(() => {
+    setCount(v => v + 1);
+    // ここで再レンダリングが走る.
+    setFlag(v => !v);
+    // ここでも再レンダリングが走る.
+  }, 100);
+}
+```
+
+---
+
+## Automatic Batching
+
+React 18では、イベントハンドラ外（promise / setTimeout / その他イベント）にも適用されるようになった。
+
+```ts
+const handleClick = () => {
+  setTimeout(() => {
+    setCount(v => v + 1);
+    setFlag(v => !v);
+    // setTimeout内の処理完了後に、再レンダリングが走る.
+    // ※厳密にはReact独自のタイミングを図ってそう.
+  }, 100);
+}
+```
 
 ---
 
