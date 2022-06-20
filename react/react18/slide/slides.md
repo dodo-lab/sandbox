@@ -63,7 +63,7 @@ const handleClick = () => {
 
 ## Automatic Batching
 
-ただし、Reactのイベントハンドラ外（promise / setTimeout / その他イベント）には適用されていなかった。
+ただし、Reactのイベントハンドラ外（promise / setTimeout / その他イベント）には`Batching`が適用されていなかった。
 
 ```ts
 const handleClick = () => {
@@ -80,7 +80,7 @@ const handleClick = () => {
 
 ## Automatic Batching
 
-React 18では、イベントハンドラ外（promise / setTimeout / その他イベント）にも適用されるようになった。
+React 18では、Reactのイベントハンドラ外（promise / setTimeout / その他イベント）にも適用されるようになった。
 
 ```ts
 const handleClick = () => {
