@@ -18,7 +18,10 @@ const theme = createTheme({
   },
 });
 
-const linkItems: LinkItem[] = [{name: 'Top', link: '/'}];
+const linkItems: LinkItem[] = [
+  {name: 'Top', link: '/'},
+  {name: 'Counter', link: '/counter'},
+];
 
 function MyApp({Component, pageProps}: AppProps) {
   return (
