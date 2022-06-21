@@ -1,4 +1,4 @@
-import {Box, BoxProps, Container, styled, TextField, Typography} from '@mui/material';
+import {Box, BoxProps, Button, Container, styled, TextField, Typography} from '@mui/material';
 import {useRenderingCount} from 'hooks/useRenderingCount';
 import type {NextPage} from 'next';
 import {useUser} from 'states/useUser';
@@ -11,15 +11,20 @@ const ItemBox = styled(Box)({
 });
 
 const Inputs: React.FC<BoxProps> = props => {
-  const {name, age, setName, setAge} = useUser(state => ({...state}), shallow);
+  const {name, age, setName, setAge, clear} = useUser(state => ({...state}), shallow);
   const renderingCount = useRenderingCount();
 
   return (
     <ItemBox {...props}>
       {renderingCount}
       <Box sx={{p: 2}}>
-        <TextField label="Name" value={name} onChange={e => setName(e.target.value)} />
-        <TextField label="Age" type="number" value={age} onChange={e => setAge(Number(e.target.value))} />
+        <Box>
+          <TextField label="Name" value={name} onChange={e => setName(e.target.value)} />
+          <TextField label="Age" type="number" value={age} onChange={e => setAge(Number(e.target.value))} />
+        </Box>
+        <Button sx={{mt: 2}} onClick={clear}>
+          CLEAR
+        </Button>
       </Box>
     </ItemBox>
   );
