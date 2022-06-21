@@ -5,13 +5,12 @@ import {useRenderingCount} from 'hooks/useRenderingCount';
 import type {NextPage} from 'next';
 import {useCounter} from 'states/useCounter';
 
-const Home: NextPage = () => {
+const Page: NextPage = () => {
   const {count, increment, decrement} = useCounter();
   const renderingCount = useRenderingCount();
 
   return (
     <Container maxWidth="xl">
-      <Typography variant="h2">Counter</Typography>
       {renderingCount}
       <Box sx={{mt: 2, display: 'flex', gap: 2}}>
         <Button variant="outlined" onClick={decrement}>
@@ -30,4 +29,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Page;

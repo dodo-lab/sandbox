@@ -21,6 +21,7 @@ const theme = createTheme({
 const linkItems: LinkItem[] = [
   {name: 'Top', link: '/'},
   {name: 'Counter', link: '/counter'},
+  {name: 'Multiple State', link: '/multiple-state'},
 ];
 
 function MyApp({Component, pageProps}: AppProps) {
