@@ -10,6 +10,6 @@ type State = {
 export const useUser = create<State>(set => ({
   name: '',
   age: 0,
-  setName: name => set(state => ({name, age: state.age})),
-  setAge: age => set(state => ({name: state.name, age})),
+  setName: name => set({name}),
+  setAge: age => set({age}),
 }));
