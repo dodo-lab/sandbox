@@ -31,15 +31,16 @@ const Inputs: React.FC<BoxProps> = props => {
 };
 
 const Show: React.FC<BoxProps> = props => {
-  const {name, age} = useUser(state => ({name: state.name, age: state.age}), shallow);
+  const {name, age, serif} = useUser(state => ({name: state.name, age: state.age, serif: state.serif}), shallow);
   const renderingCount = useRenderingCount();
 
   return (
     <ItemBox {...props}>
       {renderingCount}
       <Box sx={{p: 2}}>
-        <Typography>Name is {name}</Typography>
-        <Typography>Age is {age}</Typography>
+        <Typography>Name : {name}</Typography>
+        <Typography>Age : {age}</Typography>
+        <Typography>{serif()}</Typography>
       </Box>
     </ItemBox>
   );
