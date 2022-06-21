@@ -1,7 +1,8 @@
-import {Box, BoxProps, Container, styled, TextField} from '@mui/material';
+import {Box, BoxProps, Container, styled, TextField, Typography} from '@mui/material';
 import {useRenderingCount} from 'hooks/useRenderingCount';
 import type {NextPage} from 'next';
 import {useUser} from 'states/useUser';
+import shallow from 'zustand/shallow';
 
 const ItemBox = styled(Box)({
   borderStyle: 'solid',
@@ -10,7 +11,7 @@ const ItemBox = styled(Box)({
 });
 
 const Inputs: React.FC<BoxProps> = props => {
-  const {name, age, setName, setAge} = useUser();
+  const {name, age, setName, setAge} = useUser(state => ({...state}), shallow);
   const renderingCount = useRenderingCount();
 
   return (
@@ -24,13 +25,31 @@ const Inputs: React.FC<BoxProps> = props => {
   );
 };
 
+const Show: React.FC<BoxProps> = props => {
+  const {name, age} = useUser(state => ({name: state.name, age: state.age}), shallow);
+  const renderingCount = useRenderingCount();
+
+  return (
+    <ItemBox {...props}>
+      {renderingCount}
+      <Box sx={{p: 2}}>
+        <Typography>Name is {name}</Typography>
+        <Typography>Age is {age}</Typography>
+      </Box>
+    </ItemBox>
+  );
+};
+
 const Page: NextPage = () => {
   const renderingCount = useRenderingCount();
 
   return (
     <Container maxWidth="xl">
-      {renderingCount}
-      <Inputs sx={{mt: 2}} />
+      <Box sx={{display: 'flex', flexDirection: 'column', gap: 2}}>
+        {renderingCount}
+        <Inputs />
+        <Show />
+      </Box>
     </Container>
   );
 };
