@@ -1,15 +1,18 @@
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import {Box, Button, Container, Typography} from '@mui/material';
+import {useRenderingCount} from 'hooks/useRenderingCount';
 import type {NextPage} from 'next';
 import {useCounter} from 'states/useCounter';
 
 const Home: NextPage = () => {
   const {count, increment, decrement} = useCounter();
+  const renderingCount = useRenderingCount();
 
   return (
     <Container maxWidth="xl">
       <Typography variant="h2">Counter</Typography>
+      {renderingCount}
       <Box sx={{mt: 2, display: 'flex', gap: 2}}>
         <Button variant="outlined" onClick={decrement}>
           <RemoveIcon />
