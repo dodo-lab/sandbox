@@ -1,7 +1,7 @@
 import {Box, BoxProps, Button, Container, styled, TextField, Typography} from '@mui/material';
 import {useRenderingCount} from 'hooks/useRenderingCount';
 import type {NextPage} from 'next';
-import {useCallback, useReducer} from 'react';
+import {useCallback, useEffect, useReducer, useState} from 'react';
 import {useUser} from 'states/useUser';
 import shallow from 'zustand/shallow';
 
@@ -95,6 +95,30 @@ const NonReactive: React.FC<BoxProps> = props => {
   );
 };
 
+const Subscribe: React.FC<BoxProps> = props => {
+  const [name, setName] = useState('');
+  const [prevName, setPrevName] = useState('');
+  const renderingCount = useRenderingCount('Subscribe');
+
+  useEffect(() => {
+    const unSubscribe = useUser.subscribe((state, prevState) => {
+      setName(state.name);
+      setPrevName(prevState.name);
+    });
+    return unSubscribe;
+  }, []);
+
+  return (
+    <ItemBox {...props}>
+      {renderingCount}
+      <Box sx={{p: 1.5}}>
+        <Typography>Name : {name}</Typography>
+        <Typography>Previous Name : {prevName}</Typography>
+      </Box>
+    </ItemBox>
+  );
+};
+
 const Page: NextPage = () => {
   const renderingCount = useRenderingCount();
 
@@ -106,6 +130,7 @@ const Page: NextPage = () => {
         <Actions />
         <Show />
         <NonReactive />
+        <Subscribe />
       </Box>
     </Container>
   );
