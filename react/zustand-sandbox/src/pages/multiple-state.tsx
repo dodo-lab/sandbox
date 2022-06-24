@@ -119,6 +119,46 @@ const Subscribe: React.FC<BoxProps> = props => {
   );
 };
 
+const SubscribeWithSelector: React.FC<BoxProps> = props => {
+  const [name, setName] = useState('');
+  const [nameAndAge, setNameAndAge] = useState('');
+  const renderingCount = useRenderingCount('Subscribe with selector');
+
+  useEffect(() => {
+    const unSubscribes: (() => void)[] = [];
+    unSubscribes.push(
+      useUser.subscribe(
+        state => state.name,
+        name => setName(`My name is ${name}.`),
+        {fireImmediately: true},
+      ),
+    );
+    unSubscribes.push(
+      useUser.subscribe(
+        state => ({name: state.name, age: state.age}),
+        ({name, age}) => setNameAndAge(`My name is ${name}.I'm ${age} years old.`),
+        {fireImmediately: true, equalityFn: shallow},
+      ),
+    );
+
+    return () => {
+      for (const func of unSubscribes) {
+        func();
+      }
+    };
+  }, []);
+
+  return (
+    <ItemBox {...props}>
+      {renderingCount}
+      <Box sx={{p: 1.5}}>
+        <Typography>{name}</Typography>
+        <Typography>{nameAndAge}</Typography>
+      </Box>
+    </ItemBox>
+  );
+};
+
 const Page: NextPage = () => {
   const renderingCount = useRenderingCount();
 
@@ -131,6 +171,7 @@ const Page: NextPage = () => {
         <Show />
         <NonReactive />
         <Subscribe />
+        <SubscribeWithSelector />
       </Box>
     </Container>
   );
