@@ -80,7 +80,7 @@ const handleClick = () => {
 
 ## Automatic Batching
 
-React 18では、Reactのイベントハンドラ外（promise / setTimeout / その他イベント）にも適用されるようになった。
+React 18では、Reactのイベントハンドラ外（promise / setTimeout / その他イベント）にも適用されるように。
 
 ```ts
 const handleClick = () => {
@@ -116,11 +116,11 @@ const handleClick = () => {
 
 UIのロード状態を宣言的に記述できる。
 
-React 17までのローディング実装はこんな感じ。（React Queryを使用）
+React 17までのローディング実装はこんな感じ。
 
 ```ts
 const Component: React.FC = () => {
-  const {data, isLoading} = useQuery('query-key', () => fetch());
+  const {data, isLoading} = useUserData();
 
   // データのフェッチ中はローディングコンポーネントをレンダリング.
   if (isLoading) {
@@ -131,6 +131,33 @@ const Component: React.FC = () => {
   return <p>{data}</p>;
 }
 ```
+
+---
+
+## Suspense
+
+React 18のSuspense機能を使った場合のローディング実装。
+
+```ts
+const Component: React.FC = () => {
+  const {data} = useUserData();
+
+  return <p>{data}</p>;
+}
+```
+
+```ts
+const Screen: React.FC = () => {
+  return (
+    <Suspense fallback={<Loading />}>
+      <Component />
+    </Suspense>
+  );
+}
+```
+
+- Componentはデータ表示することだけに専念できる
+- それにより、役割（責務）の棲み分け／細分化が可能に
 
 ---
 
