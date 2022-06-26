@@ -112,6 +112,28 @@ const handleClick = () => {
 
 ---
 
+## Suspense
+
+UIのロード状態を宣言的に記述できる。
+
+React 17までのローディング実装はこんな感じ。（React Queryを使用）
+
+```ts
+const Component: React.FC = () => {
+  const {data, isLoading} = useQuery('query-key', () => fetch());
+
+  // データのフェッチ中はローディングコンポーネントをレンダリング.
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  // データのフェッチが完了したら、そのデータを表示.
+  return <p>{data}</p>;
+}
+```
+
+---
+
 # What is Slidev?
 
 Slidev is a slides maker and presenter designed for developers, consist of the following features
