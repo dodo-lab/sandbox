@@ -44,7 +44,7 @@ layout: image-right
 
 `Batching`とは複数のステート更新をグループ化し、パフォーマンスを向上させること。
 
-React 17以前でも`onClick`といったReactのイベントハンドラ内では`Batching`を適用していた。
+React 17以前も`onClick`といったReactのイベントハンドラ内では`Batching`を適用していた。
 
 ```ts
 const handleClick = () => {
@@ -89,6 +89,23 @@ const handleClick = () => {
     setFlag(v => !v);
     // setTimeout内の処理完了後に、再レンダリングが走る.
     // ※厳密にはReact独自のタイミングを図ってそう.
+  }, 100);
+}
+```
+
+---
+
+## Automatic Batching
+
+React 18環境で、`Automatic Batching`を適用しない手段（**flushSync**）も提供されている。
+
+```ts
+const handleClick = () => {
+  setTimeout(() => {
+    // flushSync内の処理が完了したら再レンダリングが走る.
+    flushSync(() => setCount(v => v + 1));
+    // flushSync内の処理が完了したら再レンダリングが走る.
+    flushSync(() => setFlag(v => !v));
   }, 100);
 }
 ```
