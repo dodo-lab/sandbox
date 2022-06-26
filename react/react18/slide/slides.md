@@ -156,8 +156,29 @@ const Screen: React.FC = () => {
 }
 ```
 
-- Componentはデータ表示することだけに専念できる
+- Componentはデータ表示のみに専念できる
 - それにより、役割（責務）の棲み分け／細分化が可能に
+
+---
+
+## Suspense
+
+Suspenseの仕組みは、`Promise`を`throw`することで実現している。
+
+```mermaid
+sequenceDiagram
+  participant Suspense
+  participant Component
+  participant Fetch as Fetch API
+  participant Network
+
+  Suspense ->> Component: rendering
+  Component ->> Fetch: fetch
+  Fetch -->> Network: request
+  Fetch ->> Fetch: Promiseをthrow
+  Note over Component: Promiseがthrowされたので、レンダリングを諦める
+  Suspense ->> Suspense: Promiseをcatchして、Fallbackを表示
+```
 
 ---
 
