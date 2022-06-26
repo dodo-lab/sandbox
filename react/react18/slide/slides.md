@@ -169,7 +169,7 @@ Suspenseの仕組みは、`Promise`を`throw`することで実現している�
 sequenceDiagram
   participant Suspense
   participant Component
-  participant Fetch as Fetch API
+  participant Fetch as Fetch Hooks
   participant Network
 
   Suspense ->> Component: rendering
@@ -178,6 +178,27 @@ sequenceDiagram
   Fetch ->> Fetch: Promiseをthrow
   Note over Component: Promiseがthrowされたので、レンダリングを諦める
   Suspense ->> Suspense: Promiseをcatchして、Fallbackを表示
+```
+
+---
+
+## Suspense
+
+`Promise`が解決すると、再度レンダリングされる。
+
+```mermaid
+sequenceDiagram
+  participant Suspense
+  participant Component
+  participant Fetch as Fetch Hooks
+  participant Network
+
+  Network -->> Fetch: response
+  Fetch ->> Fetch: responseをキャッシュし、Promiseをresolve
+  Suspense ->> Component: rendering
+  Component ->> Fetch: fetch
+  Fetch ->> Component: response
+  Component ->> Component: rendering
 ```
 
 ---
