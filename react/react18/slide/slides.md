@@ -203,6 +203,37 @@ sequenceDiagram
 
 ---
 
+## Other
+
+その他、変更点。
+
+- StrictModeの動作変更
+
+  コンポーネントがマウントされるタイミングで、必ずアンマウントと再マウントされるようになる。
+
+```mermaid
+  flowchart LR
+
+    A[マウント] --> B[アンマウント] --> C[再マウント]
+```
+
+- React.FCのchildren廃止
+
+  React 17までは暗黙的に定義されていた`children`が廃止。
+
+  ```ts
+  type Props = {
+    // 明示的に定義.
+    children: React.ReactNode;
+  }
+
+  const Component: React.FC<Props> = ({children}) => {
+    return <>{children}</>;
+  }
+  ```
+
+---
+
 # What is Slidev?
 
 Slidev is a slides maker and presenter designed for developers, consist of the following features
