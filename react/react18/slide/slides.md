@@ -35,7 +35,7 @@ layout: image-right
 
 - Automatic Batching
 - Suspense
-- Transition
+- Transitions
 - Other
 
 ---
