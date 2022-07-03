@@ -35,7 +35,13 @@ const Page: NextPage = () => {
       />
       <Box sx={{display: 'flex', gap: 4}}>
         <BorderBox>
-          <TextField fullWidth variant="standard" label="normal" value={text} onChange={e => setText(e.target.value)} />
+          <TextField
+            fullWidth
+            variant="standard"
+            label="normalState"
+            value={text}
+            onChange={e => setText(e.target.value)}
+          />
           {textsMemo}
         </BorderBox>
         <BorderBox>
