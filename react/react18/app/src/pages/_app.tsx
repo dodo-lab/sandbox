@@ -23,6 +23,7 @@ const linkItems: LinkItem[] = [
   {name: 'Auto Batching', link: '/auto-batching'},
   {name: 'No Suspense', link: '/suspense/no-suspense'},
   {name: 'Suspense', link: '/suspense/suspense'},
+  {name: 'Nested Suspense', link: '/suspense/nested-suspense'},
   {name: 'Suspense（React Query）', link: '/suspense/suspense-react-query'},
   {name: 'Suspense（SWR）', link: '/suspense/suspense-swr'},
   {name: 'Suspense & Error（React Query）', link: '/suspense/suspense-react-query-error'},

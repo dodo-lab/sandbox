@@ -9,7 +9,7 @@ const Page: NextPage = () => {
   return (
     <Container maxWidth="xl">
       <Suspense fallback={<CircularProgress />}>
-        <UserNamesWithSuspense cacheKey={key} />
+        <UserNamesWithSuspense num={1000} cacheKey={key} />
       </Suspense>
     </Container>
   );
