@@ -203,6 +203,14 @@ sequenceDiagram
 
 ---
 
+## Transitions
+
+ステートの更新について、すぐに反映するかしないかをReactに伝える手段。
+
+`startTransition`経由でのステート更新は、すぐに反映しなくてもOKと判断され、ユーザー操作が優先される。
+
+---
+
 ## Other
 
 その他、変更点。
