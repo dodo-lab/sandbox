@@ -1,0 +1,20 @@
+root = true
+
+# https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+
+[*.{ts,tsx,js,jsx,json}]
+
+# 文字コード
+charset = utf-8
+# 改行コードはLFに統一（一部ファイルの改行コードは.gitattributesで強制的にCRLFに変更する）
+end_of_line = lf
+# インデントはスペースを利用
+indent_style = space
+# インデントサイズ
+indent_size = 2
+# ファイル末尾に改行を入れる
+insert_final_newline = true
+# 一行の長さは120文字まで
+max_line_length = 120
+# 行末の空白はトリムする
+trim_trailing_whitespace = true
