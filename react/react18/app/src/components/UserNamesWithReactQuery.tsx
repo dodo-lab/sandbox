@@ -7,7 +7,6 @@ import {UserNames} from './UserNames';
 export const UserNamesWithReactQuery: React.FC = () => {
   const {data, refetch, remove} = useQuery('suspense_react_query', () => fetchUserNames(1000), {
     suspense: true,
-    staleTime: 0,
   });
 
   return (
