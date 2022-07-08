@@ -29,7 +29,7 @@ const Page: NextPage = () => {
         sx={{my: 4}}
         valueLabelDisplay="auto"
         min={1}
-        max={1000}
+        max={3000}
         value={num}
         onChange={(_, value) => setNum(value as number)}
       />
