@@ -38,5 +38,8 @@ class MainActivity : AppCompatActivity() {
                 binding.webview.goForward()
             }
         }
+        binding.reloadButton.setOnClickListener {
+            binding.webview.reload()
+        }
     }
 }
