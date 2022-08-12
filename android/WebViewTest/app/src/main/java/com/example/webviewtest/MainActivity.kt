@@ -3,7 +3,6 @@ package com.example.webviewtest
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.webviewtest.databinding.ActivityMainBinding
 
