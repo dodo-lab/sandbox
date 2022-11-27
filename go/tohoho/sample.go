@@ -3,8 +3,7 @@ package main
 import "fmt"
 
 func print() {
-	num := 123
-	str := "ABC"
+	num, str := 123, "ABC"
 
 	fmt.Print("num=", num, " str=", str, "\n")
 	fmt.Println("num=", num, " str=", str)
