@@ -27,9 +27,23 @@ func typeConvert() {
 	fmt.Printf("n3=%d n4=%d\n", n3, n4)
 }
 
+func arrayTest() {
+	// 配列はコンパイル時に要素数が決定するため、増減不可.
+	a1 := [3]string{}
+	a1[0] = "Red"
+	a1[1] = "Green"
+	a1[2] = "Blue"
+	fmt.Println(a1[0], a1[1], a1[2])
+
+	// 初期化によって配列要素数が決まる場合は、要素数の指定を[...]とすることが可能.
+	a2 := [...]string{"Yellow", "Pink"}
+	fmt.Println(a2[0], a2[1])
+}
+
 func main() {
 	fmt.Println("hello, world")
 	print()
 	typeAlias()
 	typeConvert()
+	arrayTest()
 }
