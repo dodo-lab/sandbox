@@ -40,6 +40,31 @@ func arrayTest() {
 	fmt.Println(a2[0], a2[1])
 }
 
+func sliceTest() {
+	// スライスは配列の要素数を変動可能にしたもの.メモリ効率や速度は配列と比較して劣る.
+	s1 := []string{}
+	s1 = append(s1, "Red")
+	s1 = append(s1, "Green")
+	s1 = append(s1, "Blue")
+	fmt.Println(s1[0], s1[1], s1[2])
+
+	// lenは要素数、capは容量.
+	// 容量を超えた要素数になると、倍の容量が別途メモリ確保され、元のデータがコピーされる.
+	s2 := []int{}
+	for i := 0; i < 10; i++ {
+		s2 = append(s2, i)
+		fmt.Println(len(s2), cap(s2))
+	}
+
+	// makeを利用すると、指定した容量でメモリ確保可能.
+	// あらかじめ確保しておくことで、容量超過時のメモリ再確保とコピーの無駄を省ける.
+	s3 := make([]int, 0, 32)
+	for i := 0; i < 10; i++ {
+		s3 = append(s3, i)
+		fmt.Println(len(s3), cap(s3))
+	}
+}
+
 func main() {
 	fmt.Println("hello, world")
 	print()
