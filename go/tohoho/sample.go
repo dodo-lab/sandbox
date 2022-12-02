@@ -97,6 +97,28 @@ func mapTest() {
 	}
 }
 
+func switchTest() {
+	dayOfWeek := "sun"
+
+	// 他言語とは違い、switch文にbreakは不要.次のcaseも処理したい場合は'fallthrough'を記述する.
+	switch dayOfWeek {
+	case "sat":
+		fallthrough
+	case "sun":
+		fmt.Println("Holiday")
+	default:
+		fmt.Println("Weekday")
+	}
+
+	// caseは条件式も対応.
+	switch {
+	case dayOfWeek == "sat" || dayOfWeek == "sun":
+		fmt.Println("Holiday")
+	default:
+		fmt.Println("Weekday")
+	}
+}
+
 func main() {
 	fmt.Println("hello, world")
 	print()
@@ -104,4 +126,5 @@ func main() {
 	typeConvert()
 	arrayTest()
 	mapTest()
+	switchTest()
 }
