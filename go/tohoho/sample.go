@@ -119,6 +119,41 @@ func switchTest() {
 	}
 }
 
+func forTest() {
+	// Go言語にはwhile文がないため、繰り返し処理はすべてfor文を使用.
+	x := 0
+	y := 3
+	for x < y {
+		x++
+		fmt.Printf("x = %d, y = %d\n", x, y)
+	}
+	// 基本形.
+	for i := 0; i < 5; i++ {
+		fmt.Printf("%d ",i)
+	}
+	fmt.Print("\n")
+
+	// 条件を省略すると無限ループ.
+	n := 0
+	for {
+		n++
+		if n > 10 {
+			break
+		} else if n % 2 == 1 {
+			continue
+		} else {
+			fmt.Printf("%d ", n)
+		}
+	}
+	fmt.Print("\n")
+
+	// 配列やスライスには'range'を使用.
+	colors := [...]string{"Red", "Green", "Blue"}
+	for i, color := range colors {
+		fmt.Printf("%d: %s\n", i, color)
+	}
+}
+
 func main() {
 	fmt.Println("hello, world")
 	print()
