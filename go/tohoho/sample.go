@@ -65,10 +65,43 @@ func sliceTest() {
 	}
 }
 
+func mapTest() {
+	// マップを定義
+	m1 := map[string]int{
+		"x": 100,
+		"y": 200,
+	}
+	// マップに要素を追加
+	m1["z"] = 300
+
+	// マップの長さ
+	fmt.Println(len(m1))
+
+	for key, value := range m1 {
+		fmt.Printf("%s = %d\n", key, value)
+	}
+
+	// 指定の要素を削除
+	delete(m1, "y")
+
+	// 指定の要素が存在するかチェック
+	_, check := m1["x"]
+	if check {
+		fmt.Println("Exist")
+	} else {
+		fmt.Println("Not exist")
+	}
+
+	for key, value := range m1 {
+		fmt.Printf("%s = %d\n", key, value)
+	}
+}
+
 func main() {
 	fmt.Println("hello, world")
 	print()
 	typeAlias()
 	typeConvert()
 	arrayTest()
+	mapTest()
 }
