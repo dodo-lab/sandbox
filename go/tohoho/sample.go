@@ -154,6 +154,13 @@ func forTest() {
 	}
 }
 
+// deferは、関数から戻る直前に処理を遅延実行する.
+func deferTest() {
+	fmt.Println("deferTest start")
+	defer fmt.Println("deferTest defer")
+	fmt.Println("deferTest end")
+}
+
 func main() {
 	fmt.Println("hello, world")
 	print()
@@ -162,4 +169,5 @@ func main() {
 	arrayTest()
 	mapTest()
 	switchTest()
+	deferTest()
 }
