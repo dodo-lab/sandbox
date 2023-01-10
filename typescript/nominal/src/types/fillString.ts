@@ -1,7 +1,7 @@
 import { Nominal } from './nominal';
 import { isString } from './string';
 
-type FillString = Nominal<string, 'FillString'>;
+export type FillString = Nominal<string, 'FillString'>;
 
 export function isFillString(v: unknown): v is FillString {
   return isString(v) && v !== '';
