@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         // encode data
-        String data = "CUSTOM_QRC1234500001002023020716294511111999999333312345678911234567890000000000000000";
+        String data = "FSDKGJSDKLGHIDSHGKSHG43849234347584758346724532755873475843758437590438594574857485743";
 
         // encode options
         Map<EncodeHintType,Object> hint=new HashMap<>();
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 BitMatrix bitMatrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, 256, 256, hint);
                 Bitmap bitmap = createBitmap(bitMatrix);
                 long end = System.currentTimeMillis();
+
                 ImageView imageView = (ImageView) findViewById(R.id.imageView);
                 imageView.setImageBitmap(bitmap);
 
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                 Bitmap bitmap = barcodeEncoder.encodeBitmap(data, BarcodeFormat.QR_CODE, 256, 256, hint);
                 long end = System.currentTimeMillis();
+
                 ImageView imageView = (ImageView) findViewById(R.id.imageView);
                 imageView.setImageBitmap(bitmap);
 
