@@ -1,13 +1,11 @@
 import remoteConfig from '@react-native-firebase/remote-config';
-import {useNavigation} from '@react-navigation/native';
-import React, {useCallback, useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button, Text, ThemeContext} from 'react-native-elements';
 
 export const Home: React.FC = () => {
-  const navigation = useNavigation();
   const {theme} = useContext(ThemeContext);
-  const onGoToInstructionButtonPress = useCallback(() => navigation.navigate('Instructions'), [navigation]);
+  const [testId, setTestId] = useState('dummy');
 
   useEffect(() => {
     remoteConfig()
@@ -32,17 +30,17 @@ export const Home: React.FC = () => {
         }
 
         const value = remoteConfig().getValue('testId');
-        const str = value.asString();
-        console.log('remote config value:', str);
+        setTestId(value.asString());
       })
       .catch(_ => {});
   }, []);
 
   return (
     <View style={StyleSheet.flatten([styles.container, {backgroundColor: theme.colors?.primary}])}>
-      <Text h1 style={styles.textColor}>
-        Hello, World!
-      </Text>
+      <Text>{testId}</Text>
+      <Button title="get" onPress={() => setTestId(remoteConfig().getString('testId'))} />
+      <Button title="fetch" onPress={() => remoteConfig().fetch(0)} />
+      <Button title="fetchAndActivate" onPress={() => remoteConfig().fetchAndActivate()} />
     </View>
   );
 };
