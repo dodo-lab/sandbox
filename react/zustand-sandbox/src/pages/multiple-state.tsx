@@ -32,6 +32,12 @@ const Actions: React.FC<BoxProps> = props => {
   const clear = useUser(state => state.clear);
   const setName = useUser(state => state.setName);
   const setAge = useUser(state => state.setAge);
+  // shallowを使う場合は、必要な要素を明示的に指定する.
+  // const {clear, setName, setAge} = useUser(
+  //   state => ({clear: state.clear, setName: state.setName, setAge: state.setAge}),
+  //   shallow,
+  // );
+
   const renderingCount = useRenderingCount('Actions');
 
   const empty = useCallback(() => {
